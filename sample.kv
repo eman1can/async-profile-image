@@ -1,0 +1,67 @@
+#:import CircularProfileImage src.circular_profile_image.CircularProfileImage
+#:import ProfileImageCropper src.profile_image_cropper.ProfileImageCropper
+
+<SampleWindow>:
+    RelativeLayout:
+        id: file_view
+        size_hint: 0.5, 0.5
+        pos_hint: {'y': 0.5}
+        # Draw a white background behind the fileviewer
+        canvas:
+            Rectangle:
+                size: self.size
+        FileChooserListView:
+            id: file_chooser
+            pos_hint: {'top': 0.925}
+            size_hint: 1, 0.825
+            font_color: 0, 0, 0, 1
+            # Keep the file_chooser from erroring on the sysfile
+            rootpath: 'C:/Users'
+        Button:
+            size_hint: 0.3, 0.08
+            pos_hint: {'center_x': 0.75, 'center_y': 0.05}
+            color: 0, 0, 0, 1
+            text: 'Open Image'
+            on_release: root.crop_image(file_chooser.selection)
+    RelativeLayout:
+        id: crop_view
+        size_hint: 0.5, 0.5
+        canvas:
+            Rectangle:
+                size: self.size
+        ProfileImageCropper:
+            id: cropper
+            size_hint: None, 0.6
+            width: self.height
+            pos_hint: {'center_x': 0.45, 'y': 0.1}
+        CircularProfileImageCropper:
+            id: circle_cropper
+            size_hint: None, 0.6
+            width: self.height
+            pos_hint: {'center_x': 0.25, 'y': 0.1}
+        Label:
+            size_hint: 1, 0.15
+            pos_hint: {'top': 0.975}
+            text: 'Please Adjust the image'
+            color: 0, 0, 0, 1
+        Button:
+            id: done
+            size_hint: 0.275, 0.08
+            pos_hint: {'center_x': 0.8, 'center_y': 0.05}
+            color: 0, 0, 0, 1
+            text: 'Apply'
+            on_release:
+                root.update_image(*cropper.get_image_crop())
+                root.update_circle_image(*circle_cropper.get_image_crop())
+    ProfileImage:
+        id: preview
+        size_hint: None, 0.4
+        width: self.height
+        pos_hint: {'center_x': 0.75, 'center_y': 0.75}
+        source: 'missing_profile_image.png'
+    CircularProfileImage:
+        id: circle_preview
+        size_hint: None, 0.4
+        width: self.height
+        pos_hint: {'center_x': 0.75, 'center_y': 0.25}
+        source: 'missing_profile_image.png'

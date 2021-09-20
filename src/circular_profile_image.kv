@@ -1,0 +1,20 @@
+<-CircularProfileImage>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        StencilPush
+        Ellipse:
+            size: self.size
+            pos: self.pos
+        StencilUse
+        Rectangle:
+            texture: self.texture
+            size: self.display_size
+            pos: self.display_pos
+        StencilUnUse
+        Ellipse:
+            size: self.size
+            pos: self.pos
+        StencilPop
+        Color:
+            rgba: 1, 1, 1, 1

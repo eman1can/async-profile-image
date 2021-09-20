@@ -1,0 +1,20 @@
+<-ProfileImage>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        StencilPush
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        StencilUse
+        Rectangle:
+            texture: self.texture
+            size: self.display_size
+            pos: self.display_pos
+        StencilUnUse
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        StencilPop
+        Color:
+            rgba: 1, 1, 1, 1

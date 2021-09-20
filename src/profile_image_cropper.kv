@@ -1,0 +1,146 @@
+#:import Matrix kivy.graphics.transformation.Matrix
+
+<ProfileImageCropper>:
+    RelativeLayout:
+        size_hint: None, 1
+        width: self.height
+        pos: root.pos
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            StencilPush
+            Rectangle:
+                size: self.size
+                pos: 0, 0
+            StencilUse
+            Color:
+                rgba: 1, 1, 1, 1
+        canvas.after:
+            StencilUnUse
+            Rectangle:
+                size: self.size
+                pos: 0, 0
+            StencilPop
+            Color:
+                rgba: 1, 1, 1, 1
+        ScatterCrop:
+            id: scatter
+            do_rotation: False
+            scale_max: 2.5
+            scale_min: 1
+
+<CircularProfileImageCropper>:
+    RelativeLayout:
+        size_hint: None, 1
+        width: self.height
+        pos: root.pos
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            StencilPush
+            Rectangle:
+                size: self.size
+                pos: 0, 0
+            StencilUse
+            Color:
+                rgba: 1, 1, 1, 1
+        canvas.after:
+            StencilUnUse
+            Rectangle:
+                size: self.size
+                pos: 0, 0
+            StencilPop
+            Color:
+                rgba: 1, 1, 1, 1
+        CircularScatterCrop:
+            id: scatter
+            do_rotation: False
+            scale_max: 2.5
+            scale_min: 1
+
+
+<ScatterCrop>:
+    texture: image.texture
+    canvas.after:
+        Color:
+            rgba: 0, 0, 0, 0.4
+        PushMatrix
+        MatrixInstruction:
+            matrix: self.transform
+        Rectangle:
+            size: self.image_size
+            pos: self.image_pos
+        PopMatrix
+        Color:
+            rgba: 1, 1, 1, 1
+        StencilPush
+        Rectangle:
+            size: self.crop_size
+            pos: (self.width - self.crop_width) / 2, (self.height - self.crop_height) / 2
+        StencilUse
+        PushMatrix
+        MatrixInstruction:
+            matrix: self.transform
+        Rectangle:
+            texture: self.texture
+            size: self.image_size
+            pos: self.image_pos
+        PopMatrix
+        StencilUnUse
+        Rectangle:
+            size: self.crop_size
+            pos: (self.width - self.crop_width) / 2, (self.height - self.crop_height) / 2
+        StencilPop
+        Color:
+            rgba: 1, 1, 1, 1
+    Image:
+        id: image
+        allow_stretch: True
+        keep_ratio: False
+        source: root.source
+        size_hint: None, None
+        size: root.image_size
+        pos: root.image_pos
+
+<CircularScatterCrop>:
+    texture: image.texture
+    canvas.after:
+        Color:
+            rgba: 0, 0, 0, 0.4
+        PushMatrix
+        MatrixInstruction:
+            matrix: self.transform
+        Rectangle:
+            size: self.image_size
+            pos: self.image_pos
+        PopMatrix
+        Color:
+            rgba: 1, 1, 1, 1
+        StencilPush
+        Ellipse:
+            size: self.crop_size
+            pos: (self.width - self.crop_width) / 2, (self.height - self.crop_height) / 2
+        StencilUse
+        PushMatrix
+        MatrixInstruction:
+            matrix: self.transform
+        Rectangle:
+            texture: self.texture
+            size: self.image_size
+            pos: self.image_pos
+        PopMatrix
+        StencilUnUse
+        Ellipse:
+            size: self.crop_size
+            pos: (self.width - self.crop_width) / 2, (self.height - self.crop_height) / 2
+        StencilPop
+        Color:
+            rgba: 1, 1, 1, 1
+    Image:
+        id: image
+        allow_stretch: True
+        keep_ratio: False
+        source: root.source
+        size_hint: None, None
+        size: root.image_size
+        pos: root.image_pos
